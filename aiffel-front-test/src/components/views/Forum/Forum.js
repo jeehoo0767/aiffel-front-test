@@ -69,7 +69,8 @@ function Forum() {
     return data.map((item, index) => {
       return (
         <ForumTable
-          key={index}
+          key={item.id}
+          id={item.id}
           title={item.title}
           content={item.content}
           tagColor={item.tag.color}
