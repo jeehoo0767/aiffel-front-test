@@ -22,10 +22,12 @@ const PageButton = styled.button`
 
 function Forum() {
   const [InputValue, setInputValue] = useState('');
-  const [PageNumber, setPageNumber] = useState(1);
-  const [ForumData, setForumData] = useState([]);
+  const [PageNumber, setPageNumber] = useState([1, 2, 3]);
+  const [ForumData, setForumData] = useState([]); // 검색용 포럼 데이터
+  const [SeparateForumData, setSeparateForumData] = useState([]); // 페이징 렌더링용 포럼 데이터
+  const [CurrentPageNumber, setCurrentPageNumber] = useState(1);
   useEffect(() => {
-    Axios.get('http://localhost:5000/forum').then((response) => {
+    Axios.get(`http://localhost:5000/forum`).then((response) => {
       if (response.data) {
         console.log(response.data);
         setForumData(response.data);
@@ -33,8 +35,32 @@ function Forum() {
         alert('데이터 가져오기 실패');
       }
     });
+    Axios.get(
+      `http://localhost:5000/forum?_page=${CurrentPageNumber}&_limit=5`,
+    ).then((response) => {
+      if (response.data) {
+        console.log(response.data);
+        setSeparateForumData(response.data);
+      } else {
+        alert('데이터 가져오기 실패');
+      }
+    });
   }, []); // 포럼 데이터 가져오기 ( ?_page=2&_limit=5 )
-  
+
+  const handlePaging = (e) => {
+    console.log(e.target.innerText);
+    setCurrentPageNumber(e.target.innerText);
+    Axios.get(
+      `http://localhost:5000/forum?_page=${CurrentPageNumber}&_limit=5`,
+    ).then((response) => {
+      if (response.data) {
+        setSeparateForumData(response.data);
+      } else {
+        alert('데이터 가져오기 실패');
+      }
+    });
+  };
+
   const handleValueChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -43,6 +69,7 @@ function Forum() {
     data = data.filter((item) => {
       return item.title.indexOf(InputValue) > -1;
     });
+
     return data.map((item, index) => {
       return (
         <ForumTable
@@ -65,12 +92,16 @@ function Forum() {
         <th>내 용</th>
         <th>태 그</th>
         <th>시 간</th>
-        {ForumData && renderForumTable(ForumData)}
+        {ForumData && renderForumTable(SeparateForumData)}
       </table>
       <PageButtonContainer>
-        <PageButton>1</PageButton>
-        <PageButton>2</PageButton>
-        <PageButton>3</PageButton>
+        {PageNumber.map((item, index) => {
+          return (
+            <PageButton key={index} onClick={handlePaging}>
+              {item}
+            </PageButton>
+          );
+        })}
       </PageButtonContainer>
     </div>
   );
