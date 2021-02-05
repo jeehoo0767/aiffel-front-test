@@ -25,7 +25,7 @@ function Login(props) {
     console.log('submit');
     Axios.get('http://localhost:5000/login', { email, password }).then(
       (response) => {
-        console.log(response.data.length !== 0);
+        console.log(response.data);
         if (response.data.length !== 0) {
           localStorage.setItem('username', response.data[0].username); // response.data
           props.history.push('/forum');
