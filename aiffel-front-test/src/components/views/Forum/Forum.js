@@ -48,10 +48,10 @@ function Forum() {
   }, []); // 포럼 데이터 가져오기 ( ?_page=2&_limit=5 )
 
   const handlePaging = (e) => {
-    console.log(e.target.innerText);
-    setCurrentPageNumber(e.target.innerText);
     Axios.get(
-      `http://localhost:5000/forum?_page=${CurrentPageNumber}&_limit=5`,
+      `http://localhost:5000/forum?_page=${Number(
+        e.target.innerText,
+      )}&_limit=5`,
     ).then((response) => {
       if (response.data) {
         setSeparateForumData(response.data);
@@ -66,10 +66,6 @@ function Forum() {
   };
 
   const renderForumTable = (data) => {
-    data = data.filter((item) => {
-      return item.title.indexOf(InputValue) > -1;
-    });
-
     return data.map((item, index) => {
       return (
         <ForumTable
@@ -84,24 +80,53 @@ function Forum() {
     });
   };
 
+  const filterForumTable = () => {
+    let data = ForumData.filter((item) => {
+      return item.title.indexOf(InputValue) > -1;
+    });
+    console.log(data);
+    setSeparateForumData(data);
+  };
+
+  const tableRefresh = () => {
+    Axios.get(
+      `http://localhost:5000/forum?_page=${CurrentPageNumber}&_limit=5`,
+    ).then((response) => {
+      if (response.data) {
+        console.log(response.data);
+        setSeparateForumData(response.data);
+      } else {
+        alert('데이터 가져오기 실패');
+      }
+    });
+    setInputValue('');
+  };
+
   return (
     <div>
       <input type="text" onChange={handleValueChange} value={InputValue} />
+      <button type="button" onClick={filterForumTable}>
+        검색
+      </button>
+      <button type="button" onClick={tableRefresh}>
+        초기화
+      </button>
       <table border="1" style={{ borderCollapse: 'collapse' }}>
         <th>제 목</th>
         <th>내 용</th>
         <th>태 그</th>
         <th>시 간</th>
-        {ForumData && renderForumTable(SeparateForumData)}
+        {SeparateForumData && renderForumTable(SeparateForumData)}
       </table>
       <PageButtonContainer>
-        {PageNumber.map((item, index) => {
-          return (
-            <PageButton key={index} onClick={handlePaging}>
-              {item}
-            </PageButton>
-          );
-        })}
+        {SeparateForumData.length === 5 &&
+          PageNumber.map((item, index) => {
+            return (
+              <PageButton key={index} onClick={handlePaging}>
+                {item}
+              </PageButton>
+            );
+          })}
       </PageButtonContainer>
     </div>
   );
