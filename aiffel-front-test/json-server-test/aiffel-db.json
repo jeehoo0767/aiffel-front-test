@@ -169,6 +169,16 @@
         "name": "general",
         "color": "#ff1357"
       }
+    },
+    {
+      "id": 18,
+      "title": "ㅂㅈㄱ",
+      "content": "ㅂㅈㄱ",
+      "isLiked": false,
+      "tag": {
+        "name": "general",
+        "color": "#ff1357"
+      }
     }
   ],
   "users": [

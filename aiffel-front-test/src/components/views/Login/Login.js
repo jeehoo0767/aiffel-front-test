@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 function Login(props) {
@@ -16,7 +16,11 @@ function Login(props) {
     setInputValue(nextInputValue);
     console.log(InputValue);
   };
-
+  useEffect(() => {
+    if (localStorage.getItem('username')) {
+      props.history.push('/forum');
+    }
+  }, []);
   //we.want.u@aiffel.com -> 요청 이메일
   //passpassplz -> 요청 패스워드
 

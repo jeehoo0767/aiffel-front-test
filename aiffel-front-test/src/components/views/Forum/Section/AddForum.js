@@ -6,7 +6,7 @@ function AddForum(props) {
     titleInput: '',
     TextAreaInput: '',
   });
-  const { titleInput, TextAreaInput } = InputValue; // inputvapue 구조분해할당
+  const { titleInput, TextAreaInput } = InputValue; // inputvalue 구조분해할당
   const [SubmitTagValue, setSubmitTagValue] = useState('general'); // submit 할 태그의 value state 초기값
   const TagOption = [
     {
