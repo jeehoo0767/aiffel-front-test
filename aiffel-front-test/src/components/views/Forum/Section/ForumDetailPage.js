@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 import {
   ButtonStyle,
   Modal,
@@ -39,7 +40,7 @@ function ForumDetailPage(props) {
   const [IsModal, setIsModal] = useState(false);
   let forumId = props.match.params.id; // 상세페이지 포럼 id
   useEffect(() => {
-    Axios.get(`http://localhost:5000/forum/${forumId}`).then((response) => {
+    Axios.get(`http://localhost:5000/forumData/${forumId}`).then((response) => {
       if (response.data) {
         console.log(response.data);
         setIsLiked(response.data.isLiked);
@@ -51,7 +52,7 @@ function ForumDetailPage(props) {
   }, []); // didmount에서 상데페이지 해당 포럼 데이터의 id를 통한 디테일포럼데이터 셋팅
   const likeHandler = () => {
     Axios.patch(
-      `/forum/${forumId}`,
+      `/forumData/${forumId}`,
       IsLiked ? { isLiked: false } : { isLiked: true },
     ).then((response) => {
       if (IsLiked) {
@@ -67,7 +68,7 @@ function ForumDetailPage(props) {
   };
 
   const deleteForum = () => {
-    Axios.delete(`/forum/${forumId}`).then((response) => {
+    Axios.delete(`/forumData/${forumId}`).then((response) => {
       alert('삭제에 성공 하였습니다.');
       props.history.push('/forum');
     });
@@ -131,4 +132,4 @@ function ForumDetailPage(props) {
   );
 }
 
-export default ForumDetailPage;
+export default withRouter(ForumDetailPage);

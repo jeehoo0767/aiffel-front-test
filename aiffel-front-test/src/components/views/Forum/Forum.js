@@ -34,7 +34,7 @@ function Forum(props) {
   const [OpenAddForum, setOpenAddForum] = useState(false);
   useEffect(async () => {
     props.childSettingHeader();
-    await Axios.get(`http://localhost:5000/forum`).then((response) => {
+    await Axios.get(`http://localhost:5000/forumData`).then((response) => {
       if (response.data) {
         console.log(response.data);
         setForumData(response.data);
@@ -47,7 +47,7 @@ function Forum(props) {
       }
     });
     await Axios.get(
-      `http://localhost:5000/forum?_page=${CurrentPageNumber}&_limit=5`,
+      `http://localhost:5000/forumData?_page=${CurrentPageNumber}&_limit=5`,
     ).then((response) => {
       if (response.data) {
         console.log(response.data);
@@ -60,7 +60,7 @@ function Forum(props) {
 
   const handlePaging = (e) => {
     Axios.get(
-      `http://localhost:5000/forum?_page=${Number(
+      `http://localhost:5000/forumData?_page=${Number(
         e.target.innerText,
       )}&_limit=5`,
     ).then((response) => {
@@ -119,7 +119,6 @@ function Forum(props) {
   };
 
   const openAddForumModal = () => {
-    console.log('asf');
     setOpenAddForum(!OpenAddForum);
   };
 
@@ -150,7 +149,7 @@ function Forum(props) {
         </ButtonStyle>
       </div>
       <div
-        style={{ display: 'flex', justifyContent: 'center', height: '236px' }}
+        style={{ display: 'flex', justifyContent: 'center', height: '300px' }}
       >
         <StyledTable
           style={{

@@ -1,5 +1,5 @@
 {
-  "forum": [
+  "forumData": [
     {
       "id": 1,
       "title": "질문이 있습니다 ",
@@ -167,6 +167,46 @@
       "isLiked": false,
       "tag": {
         "name": "general",
+        "color": "#ff1357"
+      }
+    },
+    {
+      "id": 18,
+      "title": "1231231231",
+      "content": "23123123123",
+      "isLiked": false,
+      "tag": {
+        "name": "general",
+        "color": "#ff1357"
+      }
+    },
+    {
+      "id": 19,
+      "title": "124124124124124125",
+      "content": "125125121234123",
+      "isLiked": false,
+      "tag": {
+        "name": "general",
+        "color": "#ff1357"
+      }
+    },
+    {
+      "id": 20,
+      "title": "질문~~",
+      "content": "안녕하세요",
+      "isLiked": false,
+      "tag": {
+        "name": "tip",
+        "color": "#ff1357"
+      }
+    },
+    {
+      "id": 21,
+      "title": "테스트 질문",
+      "content": "안녕핫게요",
+      "isLiked": false,
+      "tag": {
+        "name": "learn",
         "color": "#ff1357"
       }
     }
