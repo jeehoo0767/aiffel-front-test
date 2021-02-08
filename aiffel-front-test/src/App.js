@@ -8,16 +8,20 @@ import Header from './components/views/Header/Header';
 import Profile from './components/views/Profile/Profile';
 function App() {
   const [LoginCheckState, setLoginCheckState] = useState();
-  useEffect(() => {
-    setLoginCheckState(localStorage.getItem('username'));
-  }, []);
+  const childSettingHeader = () => {
+    setLoginCheckState(sessionStorage.getItem('username'));
+  };
   return (
     <BrowserRouter>
       <div>
-        {LoginCheckState !== null && <Header />}
+        {LoginCheckState && <Header />}
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route exact path="/forum" component={Forum} />
+          <Route
+            exact
+            path="/forum"
+            component={() => <Forum childSettingHeader={childSettingHeader} />}
+          />
           <Route exact path="/forum/:id" component={ForumDetailPage} />
           <Route exact path="/profile" component={Profile} />
         </Switch>

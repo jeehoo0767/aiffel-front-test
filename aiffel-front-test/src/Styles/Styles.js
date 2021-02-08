@@ -61,6 +61,7 @@ export const ButtonStyle = styled.button`
   font-size: 18px;
   margin: 10px 10px;
   cursor: pointer;
+  outline: none;
 `;
 
 export const InputStyle = styled.input`

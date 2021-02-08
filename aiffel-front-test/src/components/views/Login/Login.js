@@ -39,7 +39,10 @@ function Login(props) {
         (response) => {
           console.log(response.data);
           if (response.data.length !== 0) {
-            localStorage.setItem('username', response.data[0].username); // response.data
+            sessionStorage.setItem(
+              'username',
+              Math.random().toString(36).substr(2, 11),
+            ); // response.data
             props.history.push('/forum');
           } else {
             alert('아이디와 비밀번호를 확인해 주세요');

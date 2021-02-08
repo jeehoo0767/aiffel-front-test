@@ -33,6 +33,7 @@ function Forum(props) {
   const [CurrentPageNumber, setCurrentPageNumber] = useState(1);
   const [OpenAddForum, setOpenAddForum] = useState(false);
   useEffect(async () => {
+    props.childSettingHeader();
     await Axios.get(`http://localhost:5000/forum`).then((response) => {
       if (response.data) {
         console.log(response.data);
@@ -92,6 +93,10 @@ function Forum(props) {
   };
 
   const filterForumTable = () => {
+    if (InputValue === '') {
+      alert('검색어가 없습니다.');
+      return;
+    }
     let data = ForumData.filter((item) => {
       return item.title.indexOf(InputValue) > -1;
     });
