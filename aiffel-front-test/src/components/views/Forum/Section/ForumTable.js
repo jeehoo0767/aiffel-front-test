@@ -6,6 +6,16 @@ const LinkedTag = styled.tr`
   cursor: pointer;
 `;
 
+const ContentTd = styled.td`
+  display: block;
+  width: 300px;
+  padding: 0 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: 0px solid black;
+`;
+
 function ForumTable(props) {
   const LinkForumDetailPage = () => {
     console.log(props.id);
@@ -14,8 +24,8 @@ function ForumTable(props) {
   return (
     <React.Fragment key={props.key}>
       <LinkedTag onClick={LinkForumDetailPage}>
-        <td>{props.title}</td>
-        <td>{props.content}</td>
+        <td style={{ width: '150px' }}>{props.title}</td>
+        <ContentTd>{props.content}</ContentTd>
         <td>{props.tagName}</td>
         <td>{props.time}</td>
       </LinkedTag>

@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 const HeaderContainer = styled.div`
-  width: 100%;
   padding: 20px;
+  margin-bottom: 20px;
   font-weight: bold;
   position: sticky;
   background-color: #fff;
@@ -17,7 +17,7 @@ function Header(props) {
   return (
     <HeaderContainer>
       <img
-        style={{ width: '150px', height: '50px', marginLeft: '50px' }}
+        style={{ width: '150px', height: '50px', marginLeft: '100px' }}
         src="aiffel_logo.png"
         alt="플랫폼로고"
       />

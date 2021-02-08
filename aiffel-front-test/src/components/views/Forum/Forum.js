@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Axios from 'axios';
 import ForumTable from './Section/ForumTable';
 import AddForum from './Section/AddForum';
+import { StyledTable, ButtonStyle, InputStyle } from '../../../Styles/Styles';
 
 const PageButtonContainer = styled.div`
   display: flex;
@@ -11,7 +12,9 @@ const PageButtonContainer = styled.div`
 
 const PageButton = styled.button`
   height: 34px;
-  border: 1px solid #d5d5d5;
+  color: white;
+  border: none;
+  background: #00baad;
   border-radius: 6px;
   padding: 0 12px;
   font-size: 14px;
@@ -19,6 +22,7 @@ const PageButton = styled.button`
   cursor: pointer;
   box-sizing: border-box;
   position: relative;
+  margin: 10px;
 `;
 
 function Forum() {
@@ -110,20 +114,46 @@ function Forum() {
 
   return (
     <div>
-      <input type="text" onChange={handleValueChange} value={InputValue} />
-      <button type="button" onClick={filterForumTable}>
-        검색
-      </button>
-      <button type="button" onClick={tableRefresh}>
-        초기화
-      </button>
-      <table border="1" style={{ borderCollapse: 'collapse' }}>
-        <th>제 목</th>
-        <th>내 용</th>
-        <th>태 그</th>
-        <th>시 간</th>
-        {SeparateForumData && renderForumTable(SeparateForumData)}
-      </table>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          margin: '20px 0',
+        }}
+      >
+        <InputStyle
+          style={{ marginLeft: '20px' }}
+          type="text"
+          onChange={handleValueChange}
+          value={InputValue}
+        />
+        <ButtonStyle type="button" onClick={filterForumTable}>
+          검색
+        </ButtonStyle>
+        <ButtonStyle type="button" onClick={tableRefresh}>
+          초기화
+        </ButtonStyle>
+      </div>
+      <div
+        style={{ display: 'flex', justifyContent: 'center', height: '236px' }}
+      >
+        <StyledTable
+          style={{
+            textAlign: 'center',
+          }}
+        >
+          <thead>
+            <th>제 목</th>
+            <th>내 용</th>
+            <th>태 그</th>
+            <th>시 간</th>
+          </thead>
+          <tbody>
+            {SeparateForumData && renderForumTable(SeparateForumData)}
+          </tbody>
+        </StyledTable>
+      </div>
       <PageButtonContainer>
         {SeparateForumData.length <= 5 &&
           PageNumber.map((item, index) => {
