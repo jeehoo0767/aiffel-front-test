@@ -14,7 +14,7 @@
       "id": 2,
       "title": "질문이 있습니다 2",
       "content": "라이너 우는 멀듯이, 비둘기, 별빛이 어머니, 까닭입니다. 별 오는 나는 내일 듯합니다. 별들을 걱정도 슬퍼하는 봅니다. 헤는 마리아 별 이름자를 잠, 풀이 멀리 별 까닭입니다. 아직 부끄러운 어머님, 까닭입니다. 없이 멀리 겨울이 이름과, 노새, 때 쓸쓸함과 북간도에 슬퍼하는 계십니다.",
-      "isLiked": true,
+      "isLiked": false,
       "tag": {
         "name": "tip",
         "color": "#ff1357"
@@ -164,16 +164,6 @@
       "id": 17,
       "title": "123",
       "content": "123",
-      "isLiked": false,
-      "tag": {
-        "name": "general",
-        "color": "#ff1357"
-      }
-    },
-    {
-      "id": 18,
-      "title": "ㅂㅈㄱ",
-      "content": "ㅂㅈㄱ",
       "isLiked": false,
       "tag": {
         "name": "general",

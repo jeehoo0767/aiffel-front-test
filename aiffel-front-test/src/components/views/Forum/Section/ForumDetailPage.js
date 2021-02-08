@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import styled from 'styled-components';
-import { ButtonStyle } from '../../../../Styles/Styles';
+import {
+  ButtonStyle,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+} from '../../../../Styles/Styles';
 
 const TitleDetailContainer = styled.div`
   border-top: 1px solid #333333;
@@ -25,11 +30,13 @@ const LikeButtonStyle = styled.button`
   font-size: 18px;
   margin: 10px 10px;
   cursor: pointer;
+  outline: none;
 `;
 
 function ForumDetailPage(props) {
   const [DetailForumData, setDetailForumData] = useState();
   const [IsLiked, setIsLiked] = useState(false);
+  const [IsModal, setIsModal] = useState(false);
   let forumId = props.match.params.id; // 상세페이지 포럼 id
   useEffect(() => {
     Axios.get(`http://localhost:5000/forum/${forumId}`).then((response) => {
@@ -43,13 +50,26 @@ function ForumDetailPage(props) {
     });
   }, []); // didmount에서 상데페이지 해당 포럼 데이터의 id를 통한 디테일포럼데이터 셋팅
   const likeHandler = () => {
-    Axios.patch(`http://localhost:5000/forum/${forumId}`).then((response) => {
-      if (response.data) {
+    Axios.patch(
+      `/forum/${forumId}`,
+      IsLiked ? { isLiked: false } : { isLiked: true },
+    ).then((response) => {
+      if (IsLiked) {
         console.log(response.data);
-        setIsLiked(true);
+        setIsLiked(false);
       } else {
-        alert('가져오기 실패');
+        setIsLiked(true);
       }
+    });
+  };
+  const openModal = () => {
+    setIsModal(!IsModal);
+  };
+
+  const deleteForum = () => {
+    Axios.delete(`/forum/${forumId}`).then((response) => {
+      alert('삭제에 성공 하였습니다.');
+      props.history.push('/forum');
     });
   };
   return (
@@ -85,8 +105,28 @@ function ForumDetailPage(props) {
         >
           좋아요
         </LikeButtonStyle>
-        <ButtonStyle style={{ backgroundColor: '#b5b6b7' }}>삭제</ButtonStyle>
+        <ButtonStyle onClick={openModal} style={{ backgroundColor: '#b5b6b7' }}>
+          삭제
+        </ButtonStyle>
       </div>
+      <Modal style={{ display: IsModal ? 'block' : 'none' }}>
+        <ModalOverlay onClick={openModal}></ModalOverlay>
+        <ModalContent>
+          <h1>정말 삭제 하시겠습니까?</h1>
+          <ButtonStyle
+            onClick={deleteForum}
+            style={{ backgroundColor: '#b5b6b7' }}
+          >
+            삭제
+          </ButtonStyle>
+          <ButtonStyle
+            onClick={openModal}
+            style={{ backgroundColor: '#b5b6b7' }}
+          >
+            닫기
+          </ButtonStyle>
+        </ModalContent>
+      </Modal>
     </div>
   );
 }

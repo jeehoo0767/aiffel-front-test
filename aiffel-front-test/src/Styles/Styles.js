@@ -77,3 +77,32 @@ export const InputStyle = styled.input`
   margin-left: 10px;
   margin-bottom: 10px;
 `;
+
+export const Modal = styled.div`
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 12212;
+  border: 1px solid #000;
+  font-weight: bold;
+`;
+
+export const ModalOverlay = styled.div`
+  width: 100%;
+  height: 1200px;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+
+export const ModalContent = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #00baad;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px;
+`;
