@@ -106,7 +106,7 @@ function Forum(props) {
 
   const tableRefresh = () => {
     Axios.get(
-      `http://localhost:5000/forum?_page=${CurrentPageNumber}&_limit=5`,
+      `http://localhost:5000/forumData?_page=${CurrentPageNumber}&_limit=5`,
     ).then((response) => {
       if (response.data) {
         console.log(response.data);
