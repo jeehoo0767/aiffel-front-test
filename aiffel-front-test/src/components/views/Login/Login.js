@@ -56,6 +56,8 @@ function Login(props) {
   //
   return (
     <div style={{ textAlign: 'center', marginTop: '100px' }}>
+      <img src="aiffel_logo.png" style={{ marginBottom: '40px' }} alt="로고" />
+      <br />
       <InputStyle
         type="text"
         name="email"
@@ -71,7 +73,7 @@ function Login(props) {
       />
       <br />
       <ButtonStyle type="button" onClick={onSubmit}>
-        전송
+        로그인
       </ButtonStyle>
     </div>
     // <div class="input_top_text">이름</div>

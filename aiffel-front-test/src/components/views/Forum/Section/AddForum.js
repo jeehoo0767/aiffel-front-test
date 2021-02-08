@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
+import {
+  InputStyle,
+  ButtonStyle,
+  TextAreaStyle,
+  SelectBoxStyle,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+} from '../../../../Styles/Styles';
 
 function AddForum(props) {
   const [InputValue, setInputValue] = useState({
     titleInput: '',
     TextAreaInput: '',
   });
-  const { titleInput, TextAreaInput } = InputValue; // inputvalue 구조분해할당
+  const [IsModal, setIsModal] = useState(true);
   const [SubmitTagValue, setSubmitTagValue] = useState('general'); // submit 할 태그의 value state 초기값
+  const { titleInput, TextAreaInput } = InputValue; // inputvalue 구조분해할당
   const TagOption = [
     {
       name: 'general',
@@ -51,39 +61,60 @@ function AddForum(props) {
       console.log('success');
     });
   };
-
+  const openModal = () => {
+    setIsModal(!IsModal);
+    props.openAddForumModal();
+    // 부모 컴포넌트인 Forum의 state가 현재 자식 컴포넌트의
+    //상태가 변경됨에 따라 부모에게도 상태를 전달하기 위한
+  };
   const onTagChange = (e) => {
     setSubmitTagValue(e.target.value);
   };
 
   return (
     <div>
-      <input
-        type="text"
-        onChange={handleValueChange}
-        name="titleInput"
-        value={titleInput}
-      />
-      <br />
-      <textarea
-        name="TextAreaInput"
-        onChange={handleValueChange}
-        value={TextAreaInput}
-        cols="30"
-        rows="10"
-      />
-      <select onChang={onTagChange}>
-        {TagOption.map((item, index) => {
-          return (
-            <option key={index} value={item.value}>
-              {item.value}
-            </option>
-          );
-        })}
-      </select>
-      <button type="button" onClick={onSubmit}>
-        등록
-      </button>
+      <Modal style={{ display: IsModal ? 'block' : 'none' }}>
+        <ModalOverlay onClick={openModal}></ModalOverlay>
+        <ModalContent>
+          <h3 style={{ color: 'white' }}>포럼 등록</h3>
+          <InputStyle
+            type="text"
+            onChange={handleValueChange}
+            name="titleInput"
+            value={titleInput}
+          />
+          <br />
+          <TextAreaStyle
+            name="TextAreaInput"
+            onChange={handleValueChange}
+            value={TextAreaInput}
+          />
+          <br />
+          <SelectBoxStyle onChange={onTagChange}>
+            {TagOption.map((item, index) => {
+              return (
+                <option key={index} value={item.value}>
+                  {item.value}
+                </option>
+              );
+            })}
+          </SelectBoxStyle>
+          <br />
+          <ButtonStyle
+            type="button"
+            style={{ backgroundColor: '#b5b6b7' }}
+            onClick={onSubmit}
+          >
+            등록
+          </ButtonStyle>
+          <ButtonStyle
+            onClick={openModal}
+            style={{ backgroundColor: '#b5b6b7' }}
+          >
+            닫기
+          </ButtonStyle>
+        </ModalContent>
+      </Modal>
     </div>
   );
 }

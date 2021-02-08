@@ -78,6 +78,36 @@ export const InputStyle = styled.input`
   margin-bottom: 10px;
 `;
 
+export const TextAreaStyle = styled.textarea`
+  width: 300px;
+  padding: 4px 12px;
+  background-color: #fafbfc;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 10px;
+  outline: none;
+  box-shadow: inset 0 1px 0 rgba(225, 228, 232, 0.2);
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+`;
+
+export const SelectBoxStyle = styled.select`
+  width: 300px;
+  padding: 4px 12px;
+  background-color: #fafbfc;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 10px;
+  outline: none;
+  box-shadow: inset 0 1px 0 rgba(225, 228, 232, 0.2);
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+`;
+
 export const Modal = styled.div`
   width: 100%;
   height: 100%;
@@ -86,13 +116,12 @@ export const Modal = styled.div`
   left: 0;
   top: 0;
   z-index: 12212;
-  border: 1px solid #000;
   font-weight: bold;
 `;
 
 export const ModalOverlay = styled.div`
   width: 100%;
-  height: 1200px;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
 `;
 

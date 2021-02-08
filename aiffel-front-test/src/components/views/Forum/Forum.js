@@ -25,12 +25,13 @@ const PageButton = styled.button`
   margin: 10px;
 `;
 
-function Forum() {
+function Forum(props) {
   const [InputValue, setInputValue] = useState('');
   const [PageNumber, setPageNumber] = useState([]);
   const [ForumData, setForumData] = useState([]); // 검색용 포럼 데이터
   const [SeparateForumData, setSeparateForumData] = useState([]); // 페이징 렌더링용 포럼 데이터
   const [CurrentPageNumber, setCurrentPageNumber] = useState(1);
+  const [OpenAddForum, setOpenAddForum] = useState(false);
   useEffect(async () => {
     await Axios.get(`http://localhost:5000/forum`).then((response) => {
       if (response.data) {
@@ -112,6 +113,11 @@ function Forum() {
     setInputValue('');
   };
 
+  const openAddForumModal = () => {
+    console.log('asf');
+    setOpenAddForum(!OpenAddForum);
+  };
+
   return (
     <div>
       <div
@@ -130,6 +136,9 @@ function Forum() {
         />
         <ButtonStyle type="button" onClick={filterForumTable}>
           검색
+        </ButtonStyle>
+        <ButtonStyle type="button" onClick={openAddForumModal}>
+          추가
         </ButtonStyle>
         <ButtonStyle type="button" onClick={tableRefresh}>
           초기화
@@ -164,7 +173,11 @@ function Forum() {
             );
           })}
       </PageButtonContainer>
-      <AddForum forumData={ForumData} />
+      {OpenAddForum ? (
+        <AddForum openAddForumModal={openAddForumModal} forumData={ForumData} />
+      ) : (
+        ''
+      )}
     </div>
   );
 }
