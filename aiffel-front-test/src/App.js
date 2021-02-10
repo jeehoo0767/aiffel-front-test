@@ -20,7 +20,7 @@ function App() {
           <Route
             exact
             path="/forum"
-            component={() => <Forum childSettingHeader={childSettingHeader} />}
+            component={() => <Forum childSettingHeader={childSettingHeader} />} //자식 컴포넌트에서 부모컴포넌트의 상태를 변경 시키기 위해 메소드 전달
           />
           <Route exact path="/forum/:id" component={ForumDetailPage} />
           <Route exact path="/profile" component={Profile} />
