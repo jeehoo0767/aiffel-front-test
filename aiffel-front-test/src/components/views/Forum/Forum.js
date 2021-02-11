@@ -39,7 +39,7 @@ function Forum(props) {
         console.log(response.data);
         setForumData(response.data);
         for (let i = 1; i <= Math.ceil(response.data.length / 5); i++) {
-          PageNumber.push(i);
+          PageNumber.push(i); // 스테이트의 직접 수정은 좋지 않은 방법임. 다른 방법을 찾는중.
           console.log(PageNumber);
         }
       } else {
