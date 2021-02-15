@@ -18,7 +18,6 @@ const ContentTd = styled.td`
 
 function ForumTable(props) {
   const LinkForumDetailPage = () => {
-    console.log(props.id);
     props.history.push(`/forum/${props.id}`);
   }; // 해당 내용 클릭 시 props로 전달받은 id를 통하여 라우트 이동
   return (

@@ -36,7 +36,6 @@ function Forum(props) {
     props.childSettingHeader(); // app.js(부모컴포넌트) 의 상태를 변경시키기 위해 전달받은 메소드를 didmount단계에서 실행
     await Axios.get(`http://localhost:5000/forumData`).then((response) => {
       if (response.data) {
-        console.log(response.data);
         setForumData(response.data);
         for (let i = 1; i <= Math.ceil(response.data.length / 5); i++) {
           PageNumber.push(i); // 스테이트의 직접 수정은 좋지 않은 방법임. 다른 방법을 찾는중.
@@ -50,7 +49,6 @@ function Forum(props) {
       `http://localhost:5000/forumData?_page=${CurrentPageNumber}&_limit=5`,
     ).then((response) => {
       if (response.data) {
-        console.log(response.data);
         setSeparateForumData(response.data);
       } else {
         alert('데이터 가져오기 실패');
@@ -64,6 +62,9 @@ function Forum(props) {
   //이벤트가 일어난 객체의 숫자를 추출 후 그 숫자로 forum페이지에 get요청으로 5개의 데이터를 받아 와 렌더링 한다.
 
   const handlePaging = (e) => {
+    if (e.target.innerText === '<') {
+    }
+    setCurrentPageNumber(Number(e.target.innerText));
     Axios.get(
       `http://localhost:5000/forumData?_page=${Number(
         e.target.innerText,
@@ -105,7 +106,6 @@ function Forum(props) {
     let data = ForumData.filter((item) => {
       return item.title.indexOf(InputValue) > -1;
     });
-    console.log(data);
     setSeparateForumData(data);
   };
 
@@ -114,7 +114,6 @@ function Forum(props) {
       `http://localhost:5000/forumData?_page=${CurrentPageNumber}&_limit=5`,
     ).then((response) => {
       if (response.data) {
-        console.log(response.data);
         setSeparateForumData(response.data);
       } else {
         alert('데이터 가져오기 실패');
@@ -173,6 +172,9 @@ function Forum(props) {
         </StyledTable>
       </div>
       <PageButtonContainer>
+        {SeparateForumData.length <= 5 && (
+          <PageButton onClick={handlePaging}>&lt;</PageButton>
+        )}
         {SeparateForumData.length <= 5 &&
           PageNumber.map((item, index) => {
             return (
@@ -181,6 +183,9 @@ function Forum(props) {
               </PageButton>
             );
           })}
+        {SeparateForumData.length <= 5 && (
+          <PageButton onClick={handlePaging}>&gt;</PageButton>
+        )}
       </PageButtonContainer>
       {OpenAddForum ? (
         <AddForum openAddForumModal={openAddForumModal} forumData={ForumData} />

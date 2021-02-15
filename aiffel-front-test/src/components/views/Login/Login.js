@@ -64,6 +64,7 @@ function Login(props) {
       <InputStyle
         type="text"
         name="email"
+        placeholder="아이디"
         onChange={handleValueChange}
         value={email}
       />
@@ -71,6 +72,7 @@ function Login(props) {
       <InputStyle
         type="password"
         name="password"
+        placeholder="비밀번호"
         onChange={handleValueChange}
         value={password}
       />
