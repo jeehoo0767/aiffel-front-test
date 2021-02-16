@@ -56,18 +56,10 @@ function Forum(props) {
     });
   }, []); // 포럼 데이터 가져오기 ( ?_page=2&_limit=5 )
 
-  //게시판 페이징처리 : useEffect 함수 에서 didmount단계에서 1페이지에 담을 데이터 5개를 가져 온다.
-  // didmount단게에서 forum의 전체 데이터 요청 시 데이터의 length/5 를 반올림 한 만큼의 오름차순 숫자 배열을 생성
-  //오름차순 숫자 배열을 각 원소마다 button요소의 텍스트로 삽입 후 각 버튼이 클릭 되었을 때 e.target.innerText 로
-  //이벤트가 일어난 객체의 숫자를 추출 후 그 숫자로 forum페이지에 get요청으로 5개의 데이터를 받아 와 렌더링 한다.
-
-  const handlePaging = (e) => {
-    if (e.target.innerText === '<') {
-    }
-    setCurrentPageNumber(Number(e.target.innerText));
+  useEffect(() => {
     Axios.get(
       `http://localhost:5000/forumData?_page=${Number(
-        e.target.innerText,
+        CurrentPageNumber,
       )}&_limit=5`,
     ).then((response) => {
       if (response.data) {
@@ -76,6 +68,31 @@ function Forum(props) {
         alert('데이터 가져오기 실패');
       }
     });
+  }, [CurrentPageNumber]);
+
+  //게시판 페이징처리 : useEffect 함수 에서 didmount단계에서 1페이지에 담을 데이터 5개를 가져 온다.
+  // didmount단게에서 forum의 전체 데이터 요청 시 데이터의 length/5 를 반올림 한 만큼의 오름차순 숫자 배열을 생성
+  //오름차순 숫자 배열을 각 원소마다 button요소의 텍스트로 삽입 후 각 버튼이 클릭 되었을 때 e.target.innerText 로
+  //이벤트가 일어난 객체의 숫자를 추출 후 그 숫자로 forum페이지에 get요청으로 5개의 데이터를 받아 와 렌더링 한다.
+
+  const handlePaging = (e) => {
+    if (e.target.innerText === '<') {
+      if (CurrentPageNumber === 1) {
+        return;
+      } else {
+        setCurrentPageNumber(CurrentPageNumber - 1);
+        return;
+      }
+    }
+    if (e.target.innerText === '>') {
+      if (CurrentPageNumber === Math.ceil(ForumData.length / 5)) {
+        return;
+      } else {
+        setCurrentPageNumber(CurrentPageNumber + 1);
+        return;
+      }
+    }
+    setCurrentPageNumber(Number(e.target.innerText));
   };
 
   const handleValueChange = (e) => {
