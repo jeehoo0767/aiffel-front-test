@@ -14,7 +14,6 @@ const PageButton = styled.button`
   height: 34px;
   color: white;
   border: none;
-  background: #00baad;
   border-radius: 6px;
   padding: 0 12px;
   font-size: 14px;
@@ -23,6 +22,7 @@ const PageButton = styled.button`
   box-sizing: border-box;
   position: relative;
   margin: 10px;
+  background: ${(props) => (props.currentPageColor ? '#00baad' : '#b5b6b7')};
 `;
 
 function Forum(props) {
@@ -195,7 +195,11 @@ function Forum(props) {
         {SeparateForumData.length <= 5 &&
           PageNumber.map((item, index) => {
             return (
-              <PageButton key={index} onClick={handlePaging}>
+              <PageButton
+                key={index}
+                onClick={handlePaging}
+                currentPageColor={item === CurrentPageNumber ? true : false}
+              >
                 {item}
               </PageButton>
             );
