@@ -12,7 +12,6 @@ const PageButtonContainer = styled.div`
 
 const PageButton = styled.button`
   height: 34px;
-  color: white;
   border: none;
   border-radius: 6px;
   padding: 0 12px;
@@ -22,7 +21,10 @@ const PageButton = styled.button`
   box-sizing: border-box;
   position: relative;
   margin: 10px;
-  background: ${(props) => (props.currentPageColor ? '#00baad' : '#b5b6b7')};
+  background-color: #ffffff;
+  font-weight: ${(props) => (props.currentPageColor ? 'bold' : 'normal')};
+  color: ${(props) => (props.currentPageColor ? '#00BAAD' : '#828282')};
+  outline: none;
 `;
 
 function Forum(props) {
@@ -36,6 +38,7 @@ function Forum(props) {
     props.childSettingHeader(); // app.js(부모컴포넌트) 의 상태를 변경시키기 위해 전달받은 메소드를 didmount단계에서 실행
     await Axios.get(`http://localhost:5000/forumData`).then((response) => {
       if (response.data) {
+        console.log(response.data);
         setForumData(response.data);
         for (let i = 1; i <= Math.ceil(response.data.length / 5); i++) {
           PageNumber.push(i); // 스테이트의 직접 수정은 좋지 않은 방법임. 다른 방법을 찾는중.
@@ -68,7 +71,7 @@ function Forum(props) {
         alert('데이터 가져오기 실패');
       }
     });
-  }, [CurrentPageNumber]);
+  }, [CurrentPageNumber]); // 페이징처리 useEffect
 
   //게시판 페이징처리 : useEffect 함수 에서 didmount단계에서 1페이지에 담을 데이터 5개를 가져 온다.
   // didmount단게에서 forum의 전체 데이터 요청 시 데이터의 length/5 를 반올림 한 만큼의 오름차순 숫자 배열을 생성
@@ -76,7 +79,7 @@ function Forum(props) {
   //이벤트가 일어난 객체의 숫자를 추출 후 그 숫자로 forum페이지에 get요청으로 5개의 데이터를 받아 와 렌더링 한다.
 
   const handlePaging = (e) => {
-    if (e.target.innerText === '<') {
+    if (e.target.innerText === '이전') {
       if (CurrentPageNumber === 1) {
         return;
       } else {
@@ -84,7 +87,7 @@ function Forum(props) {
         return;
       }
     }
-    if (e.target.innerText === '>') {
+    if (e.target.innerText === '다음') {
       if (CurrentPageNumber === Math.ceil(ForumData.length / 5)) {
         return;
       } else {
@@ -121,7 +124,11 @@ function Forum(props) {
       return;
     }
     let data = ForumData.filter((item) => {
-      return item.title.indexOf(InputValue) > -1;
+      return (
+        item.title.indexOf(InputValue) > -1 ||
+        item.content.indexOf(InputValue) > -1 ||
+        item.tag.name.indexOf(InputValue) > -1
+      );
     });
     setSeparateForumData(data);
   };
@@ -136,6 +143,7 @@ function Forum(props) {
         alert('데이터 가져오기 실패');
       }
     });
+    setCurrentPageNumber(1);
     setInputValue('');
   };
 
@@ -190,7 +198,7 @@ function Forum(props) {
       </div>
       <PageButtonContainer>
         {SeparateForumData.length <= 5 && (
-          <PageButton onClick={handlePaging}>&lt;</PageButton>
+          <PageButton onClick={handlePaging}>이전</PageButton>
         )}
         {SeparateForumData.length <= 5 &&
           PageNumber.map((item, index) => {
@@ -205,7 +213,7 @@ function Forum(props) {
             );
           })}
         {SeparateForumData.length <= 5 && (
-          <PageButton onClick={handlePaging}>&gt;</PageButton>
+          <PageButton onClick={handlePaging}>다음</PageButton>
         )}
       </PageButtonContainer>
       {OpenAddForum ? (

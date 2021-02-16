@@ -101,7 +101,7 @@ function ForumDetailPage(props) {
         style={{ width: '90%', display: 'flex', justifyContent: 'flex-end' }}
       >
         <LikeButtonStyle
-          style={{ background: IsLiked ? '#dd0f4d' : '#b5b6b7' }}
+          style={{ background: IsLiked ? '#00baad' : '#b5b6b7' }}
           onClick={likeHandler}
         >
           좋아요
