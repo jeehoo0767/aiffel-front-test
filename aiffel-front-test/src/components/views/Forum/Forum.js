@@ -216,10 +216,8 @@ function Forum(props) {
           <PageButton onClick={handlePaging}>다음</PageButton>
         )}
       </PageButtonContainer>
-      {OpenAddForum ? (
+      {OpenAddForum && (
         <AddForum openAddForumModal={openAddForumModal} forumData={ForumData} />
-      ) : (
-        ''
       )}
     </div>
   );

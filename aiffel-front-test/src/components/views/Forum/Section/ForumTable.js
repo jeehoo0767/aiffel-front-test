@@ -8,7 +8,7 @@ const LinkedTag = styled.tr`
 
 const ContentTd = styled.td`
   display: block;
-  width: 300px;
+  width: 500px;
   padding: 0 5px;
   overflow: hidden;
   text-overflow: ellipsis;
