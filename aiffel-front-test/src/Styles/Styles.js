@@ -73,10 +73,7 @@ export const InputStyle = styled.input`
   padding: 10px;
   outline: none;
   box-shadow: inset 0 1px 0 rgba(225, 228, 232, 0.2);
-  margin-top: 10px;
-  margin-right: 10px;
-  margin-left: 10px;
-  margin-bottom: 10px;
+  margin: 10px;
 `;
 
 export const TextAreaStyle = styled.textarea`
@@ -88,10 +85,7 @@ export const TextAreaStyle = styled.textarea`
   padding: 10px;
   outline: none;
   box-shadow: inset 0 1px 0 rgba(225, 228, 232, 0.2);
-  margin-top: 10px;
-  margin-right: 10px;
-  margin-left: 10px;
-  margin-bottom: 10px;
+  margin: 10px;
 `;
 
 export const SelectBoxStyle = styled.select`
@@ -103,10 +97,7 @@ export const SelectBoxStyle = styled.select`
   padding: 10px;
   outline: none;
   box-shadow: inset 0 1px 0 rgba(225, 228, 232, 0.2);
-  margin-top: 10px;
-  margin-right: 10px;
-  margin-left: 10px;
-  margin-bottom: 10px;
+  margin: 10px;
 `;
 
 export const Modal = styled.div`
