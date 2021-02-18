@@ -7,13 +7,22 @@ const LinkedTag = styled.tr`
 `;
 
 const ContentTd = styled.td`
-  display: block;
+  display: inline-block;
   width: 500px;
   padding: 0 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   border: 0px solid black;
+`;
+
+const TableCellDiv = styled.div`
+  width: 150px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: ${(props) => props.tableCellWidth};
 `;
 
 function ForumTable(props) {
@@ -23,10 +32,12 @@ function ForumTable(props) {
   return (
     <React.Fragment key={props.key}>
       <LinkedTag onClick={LinkForumDetailPage}>
-        <td style={{ width: '150px' }}>{props.title}</td>
+        <td>
+          <TableCellDiv>{props.title}</TableCellDiv>
+        </td>
         <ContentTd>{props.content}</ContentTd>
-        <td>{props.tagName}</td>
-        <td>{props.time}</td>
+        <td style={{ width: '100px' }}>{props.tagName}</td>
+        <td style={{ width: '100px' }}>{props.time}</td>
       </LinkedTag>
     </React.Fragment>
   );

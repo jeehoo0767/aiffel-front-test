@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledTable = styled.table`
+  table-layout: fixed;
   caption-side: top;
   border: none;
   border-collapse: collapse;
