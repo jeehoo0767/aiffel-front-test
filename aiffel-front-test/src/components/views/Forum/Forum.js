@@ -28,6 +28,7 @@ const PageButton = styled.button`
 `;
 
 function Forum(props) {
+  let pageNumberArray = [];
   const [InputValue, setInputValue] = useState('');
   const [PageNumber, setPageNumber] = useState([]);
   const [ForumData, setForumData] = useState([]); // 검색용 포럼 데이터
@@ -38,12 +39,14 @@ function Forum(props) {
     props.childSettingHeader(); // app.js(부모컴포넌트) 의 상태를 변경시키기 위해 전달받은 메소드를 didmount단계에서 실행
     await Axios.get(`http://localhost:5000/forumData`).then((response) => {
       if (response.data) {
-        console.log(response.data);
+        // console.log(response.data);
         setForumData(response.data);
         for (let i = 1; i <= Math.ceil(response.data.length / 5); i++) {
-          PageNumber.push(i); // 스테이트의 직접 수정은 좋지 않은 방법임. 다른 방법을 찾는중.
-          console.log(PageNumber);
+          pageNumberArray.push(i); // 페이지 넘버로 넣을 배열을 초기화 후 포문 순환을 끝난 후
+          // setPageNumber를 이용하여 배열을 주입 후 렌더링.
+          // console.log(PageNumber);
         }
+        setPageNumber(pageNumberArray);
       } else {
         alert('데이터 가져오기 실패');
       }
@@ -131,6 +134,14 @@ function Forum(props) {
       );
     });
     setSeparateForumData(data);
+    pageNumberArray = []; // 검색 요청 시 페이징 숫자로 쓸 배열을 빈 배열로 초기화
+    for (let i = 1; i <= Math.ceil(SeparateForumData.length / 5); i++) {
+      console.log(i);
+      pageNumberArray.push(i);
+    }
+    setPageNumber(pageNumberArray);
+    // 후에 검색 요청 후 검색 결과를 담은 배열의 길이를 5로 나눈 후 반올림 한 만큼
+    // 포문을 순회하며 배열에 다시 넣고 setPageNumber 호출
   };
 
   const tableRefresh = () => {
@@ -139,6 +150,12 @@ function Forum(props) {
     ).then((response) => {
       if (response.data) {
         setSeparateForumData(response.data);
+        for (let i = 1; i <= Math.ceil(ForumData.length / 5); i++) {
+          pageNumberArray.push(i); // 페이지 넘버로 넣을 배열을 초기화 후 포문 순환을 끝난 후
+          // setPageNumber를 이용하여 배열을 주입 후 렌더링.
+          // console.log(PageNumber);
+        }
+        setPageNumber(pageNumberArray);
       } else {
         alert('데이터 가져오기 실패');
       }

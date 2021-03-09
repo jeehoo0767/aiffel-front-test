@@ -8,6 +8,7 @@ function Login(props) {
     email: '',
     password: '',
   });
+  const [testValue, settestValue] = useState(1);
   const { email, password } = InputValue;
   const handleValueChange = (e) => {
     const { name, value } = e.target;
@@ -19,7 +20,7 @@ function Login(props) {
     console.log(InputValue);
   };
   useEffect(() => {
-    if (localStorage.getItem('username')) {
+    if (sessionStorage.getItem('username')) {
       props.history.push('/forum');
     }
   }, []);
