@@ -135,7 +135,8 @@ function Forum(props) {
         item.tag.name.indexOf(InputValue) > -1
       );
     });
-    // currentpage * 5 -5
+    // currentpage * 5 -5 - > 커런트페이지에 따라 5개씩 끊어서 배열에 담기
+    // 1일땐 0~4까지 2일땐 5~9까지 ... 쭉
     for (let i = forStartNumber; i <= forStartNumber + 4; i++) {}
     setSeparateForumData(data);
     pageNumberArray = []; // 검색 요청 시 페이징 숫자로 쓸 배열을 빈 배열로 초기화
