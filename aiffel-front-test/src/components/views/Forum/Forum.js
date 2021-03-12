@@ -105,7 +105,7 @@ function Forum(props) {
     setInputValue(e.target.value);
   };
 
-  const renderForumTable = (data) => {
+  const renderForumTable = (data, e) => {
     return data.map((item, index) => {
       return (
         <ForumTable
@@ -122,7 +122,8 @@ function Forum(props) {
   };
 
   const filterForumTable = () => {
-    let tempForumData = [];
+    let tempForumDataArray = [];
+    let forStartNumber = CurrentPageNumber * 5 - 5;
     if (InputValue === '') {
       alert('검색어가 없습니다.');
       return;
@@ -134,10 +135,11 @@ function Forum(props) {
         item.tag.name.indexOf(InputValue) > -1
       );
     });
-    tempForumData = data;
+    // currentpage * 5 -5
+    for (let i = forStartNumber; i <= forStartNumber + 4; i++) {}
     setSeparateForumData(data);
     pageNumberArray = []; // 검색 요청 시 페이징 숫자로 쓸 배열을 빈 배열로 초기화
-    for (let i = 1; i <= Math.ceil(tempForumData.length / 5); i++) {
+    for (let i = 1; i <= Math.ceil(data.length / 5); i++) {
       console.log(i);
       pageNumberArray.push(i);
     }
