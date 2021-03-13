@@ -74,6 +74,11 @@ function Forum(props) {
         alert('데이터 가져오기 실패');
       }
     });
+    let tempForumDataArray = [];
+    let forStartNumber = CurrentPageNumber * 5 - 5;
+    for (let i = forStartNumber; i <= forStartNumber + 4; i++) {
+      tempForumDataArray.push(ForumData[i]);
+    }
   }, [CurrentPageNumber]); // 페이징처리 useEffect
 
   //게시판 페이징처리 : useEffect 함수 에서 didmount단계에서 1페이지에 담을 데이터 5개를 가져 온다.
