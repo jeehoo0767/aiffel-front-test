@@ -36,6 +36,7 @@ function Forum(props) {
   const [SeparateForumData, setSeparateForumData] = useState([]); // 페이징 렌더링용 포럼 데이터
   const [CurrentPageNumber, setCurrentPageNumber] = useState(1);
   const [OpenAddForum, setOpenAddForum] = useState(false);
+
   useEffect(async () => {
     props.childSettingHeader(); // app.js(부모컴포넌트) 의 상태를 변경시키기 위해 전달받은 메소드를 didmount단계에서 실행
     await Axios.get(`http://localhost:5000/forumData`).then((response) => {
@@ -75,11 +76,12 @@ function Forum(props) {
     //     alert('데이터 가져오기 실패');
     //   }
     // });
-    let tempForumDataArray = [];
-    let forStartNumber = CurrentPageNumber * 5 - 5;
-    for (let i = forStartNumber; i <= forStartNumber + 4; i++) {
-      tempForumDataArray.push(tempForumDataArray[i]);
-    }
+    // if()
+    // let tempForumDataArray = [];
+    // let forStartNumber = CurrentPageNumber * 5 - 5;
+    // for (let i = forStartNumber; i <= forStartNumber + 4; i++) {
+    //   tempForumDataArray.push(ForumData[i]);
+    // }
     // setSeparateForumData(tempForumDataArray);
   }, [CurrentPageNumber]); // 페이징처리 useEffect
 
@@ -112,7 +114,7 @@ function Forum(props) {
     setInputValue(e.target.value);
   };
 
-  const renderForumTable = (data, e) => {
+  const renderForumTable = (data) => {
     return data.map((item, index) => {
       return (
         <ForumTable
@@ -144,13 +146,13 @@ function Forum(props) {
     });
     // currentpage * 5 -5 - > 커런트페이지에 따라 5개씩 끊어서 배열에 담기
     // 1일땐 0~4까지 2일땐 5~9까지 ... 쭉
+    setForumData(data);
     for (let i = forStartNumber; i <= forStartNumber + 4; i++) {
       tempForumDataArray.push(data[i]);
     }
     setSeparateForumData(tempForumDataArray);
     pageNumberArray = []; // 검색 요청 시 페이징 숫자로 쓸 배열을 빈 배열로 초기화
     for (let i = 1; i <= Math.ceil(data.length / 5); i++) {
-      console.log(i);
       pageNumberArray.push(i);
     }
     setPageNumber(pageNumberArray);
