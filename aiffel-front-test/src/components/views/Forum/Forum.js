@@ -29,6 +29,7 @@ const PageButton = styled.button`
 
 function Forum(props) {
   let pageNumberArray = [];
+  let tempForumDataArray = [];
   const [InputValue, setInputValue] = useState('');
   const [PageNumber, setPageNumber] = useState([]);
   const [ForumData, setForumData] = useState([]); // 검색용 포럼 데이터
@@ -63,22 +64,23 @@ function Forum(props) {
   }, []); // 포럼 데이터 가져오기 ( ?_page=2&_limit=5 )
 
   useEffect(() => {
-    Axios.get(
-      `http://localhost:5000/forumData?_page=${Number(
-        CurrentPageNumber,
-      )}&_limit=5`,
-    ).then((response) => {
-      if (response.data) {
-        setSeparateForumData(response.data);
-      } else {
-        alert('데이터 가져오기 실패');
-      }
-    });
+    // Axios.get(
+    //   `http://localhost:5000/forumData?_page=${Number(
+    //     CurrentPageNumber,
+    //   )}&_limit=5`,
+    // ).then((response) => {
+    //   if (response.data) {
+    //     setSeparateForumData(response.data);
+    //   } else {
+    //     alert('데이터 가져오기 실패');
+    //   }
+    // });
     let tempForumDataArray = [];
     let forStartNumber = CurrentPageNumber * 5 - 5;
     for (let i = forStartNumber; i <= forStartNumber + 4; i++) {
-      tempForumDataArray.push(ForumData[i]);
+      tempForumDataArray.push(tempForumDataArray[i]);
     }
+    // setSeparateForumData(tempForumDataArray);
   }, [CurrentPageNumber]); // 페이징처리 useEffect
 
   //게시판 페이징처리 : useEffect 함수 에서 didmount단계에서 1페이지에 담을 데이터 5개를 가져 온다.
@@ -142,8 +144,10 @@ function Forum(props) {
     });
     // currentpage * 5 -5 - > 커런트페이지에 따라 5개씩 끊어서 배열에 담기
     // 1일땐 0~4까지 2일땐 5~9까지 ... 쭉
-    for (let i = forStartNumber; i <= forStartNumber + 4; i++) {}
-    setSeparateForumData(data);
+    for (let i = forStartNumber; i <= forStartNumber + 4; i++) {
+      tempForumDataArray.push(data[i]);
+    }
+    setSeparateForumData(tempForumDataArray);
     pageNumberArray = []; // 검색 요청 시 페이징 숫자로 쓸 배열을 빈 배열로 초기화
     for (let i = 1; i <= Math.ceil(data.length / 5); i++) {
       console.log(i);
@@ -166,6 +170,13 @@ function Forum(props) {
           // console.log(PageNumber);
         }
         setPageNumber(pageNumberArray);
+      } else {
+        alert('데이터 가져오기 실패');
+      }
+    });
+    Axios.get(`http://localhost:5000/forumData`).then((response) => {
+      if (response.data) {
+        setForumData(response.data);
       } else {
         alert('데이터 가져오기 실패');
       }
@@ -224,24 +235,19 @@ function Forum(props) {
         </StyledTable>
       </div>
       <PageButtonContainer>
-        {SeparateForumData.length <= 5 && (
-          <PageButton onClick={handlePaging}>이전</PageButton>
-        )}
-        {SeparateForumData.length <= 5 &&
-          PageNumber.map((item, index) => {
-            return (
-              <PageButton
-                key={index}
-                onClick={handlePaging}
-                currentPageColor={item === CurrentPageNumber ? true : false}
-              >
-                {item}
-              </PageButton>
-            );
-          })}
-        {SeparateForumData.length <= 5 && (
-          <PageButton onClick={handlePaging}>다음</PageButton>
-        )}
+        {<PageButton onClick={handlePaging}>이전</PageButton>}
+        {PageNumber.map((item, index) => {
+          return (
+            <PageButton
+              key={index}
+              onClick={handlePaging}
+              currentPageColor={item === CurrentPageNumber ? true : false}
+            >
+              {item}
+            </PageButton>
+          );
+        })}
+        {<PageButton onClick={handlePaging}>다음</PageButton>}
       </PageButtonContainer>
       {OpenAddForum && (
         <AddForum openAddForumModal={openAddForumModal} forumData={ForumData} />
